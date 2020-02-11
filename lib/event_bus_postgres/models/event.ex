@@ -7,6 +7,11 @@ defmodule EventBus.Postgres.Model.Event do
 
   alias EventBus.Postgres.{Config, Model.Event}
 
+  case Application.get_env(:event_bus_postgres, __MODULE__)[:schema_prefix] do
+    nil -> nil
+    prefix -> @schema_prefix prefix
+  end
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "events" do
